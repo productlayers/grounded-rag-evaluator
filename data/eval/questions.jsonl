@@ -1,0 +1,55 @@
+{"id": "q001", "question": "How do I reset my access?", "expected_doc_id": "support/faq", "tags": ["faq", "account"]}
+{"id": "q002", "question": "How can I recover access to my account?", "expected_doc_id": "support/faq", "tags": ["faq", "paraphrase"]}
+{"id": "q003", "question": "Where do I go to recover my account?", "expected_doc_id": "support/faq", "tags": ["faq"]}
+{"id": "q004", "question": "What should I use to sign in again if I am locked out?", "expected_doc_id": "support/faq", "acceptable_doc_ids": ["support/faq", "support/troubleshooting"], "tags": ["faq"]}
+{"id": "q005", "question": "Do I need my email for account recovery?", "expected_doc_id": "support/faq", "tags": ["faq"]}
+{"id": "q006", "question": "Where are citations in answers?", "expected_doc_id": "support/faq", "tags": ["faq", "citations"]}
+{"id": "q007", "question": "Does the demo use retrieved chunks only?", "expected_doc_id": "support/faq", "tags": ["faq", "citations"]}
+{"id": "q008", "question": "What happens if evidence is missing?", "expected_doc_id": "support/faq", "tags": ["faq"]}
+{"id": "q009", "question": "How do I contact support about policy questions?", "expected_doc_id": "support/faq", "tags": ["faq", "contact"]}
+{"id": "q010", "question": "What subject line should I use for a policy inquiry ticket?", "expected_doc_id": "support/faq", "tags": ["faq", "contact"]}
+{"id": "q011", "question": "Is sharing login credentials allowed?", "expected_doc_id": "usage-policy", "tags": ["policy", "security"]}
+{"id": "q012", "question": "Can I share my password with a friend?", "expected_doc_id": "usage-policy", "acceptable_doc_ids": ["usage-policy", "support/account-management"], "tags": ["policy", "paraphrase"]}
+{"id": "q013", "question": "What are my responsibilities for registration information?", "expected_doc_id": "usage-policy", "acceptable_doc_ids": ["usage-policy", "support/account-management"], "tags": ["policy", "account"]}
+{"id": "q014", "question": "What types of content are prohibited uploads?", "expected_doc_id": "usage-policy", "tags": ["policy", "content"]}
+{"id": "q015", "question": "Can I upload material that infringes third-party rights?", "expected_doc_id": "usage-policy", "tags": ["policy", "content"]}
+{"id": "q016", "question": "What enforcement actions are mentioned for violations?", "expected_doc_id": "usage-policy", "tags": ["policy", "enforcement"]}
+{"id": "q017", "question": "Can violations lead to suspension?", "expected_doc_id": "usage-policy", "tags": ["policy", "enforcement"]}
+{"id": "q018", "question": "Are appeals mentioned, and where?", "expected_doc_id": "usage-policy", "tags": ["policy", "enforcement"]}
+{"id": "q019", "question": "What is this usage policy about at a high level?", "expected_doc_id": "usage-policy", "tags": ["policy", "overview"]}
+{"id": "q020", "question": "Summarize the FAQ section about access recovery.", "expected_doc_id": "support/faq", "tags": ["faq", "summary"]}
+{"id": "q021", "question": "Does the FAQ mention opening tickets?", "expected_doc_id": "support/faq", "tags": ["faq", "contact"]}
+{"id": "q022", "question": "What portal is referenced for policy questions?", "expected_doc_id": "support/faq", "tags": ["faq", "contact"]}
+{"id": "q023", "question": "Is illegal content allowed?", "expected_doc_id": "usage-policy", "tags": ["policy", "content"]}
+{"id": "q024", "question": "What should I do if I have a policy question?", "expected_doc_id": "support/faq", "tags": ["faq", "routing"]}
+{"id": "q025", "question": "Are citations required in the grounded demo answers?", "expected_doc_id": "support/faq", "tags": ["faq", "citations"]}
+{"id": "q026", "question": "What does the usage policy say about accurate registration information?", "expected_doc_id": "usage-policy", "tags": ["policy", "account"]}
+{"id": "q027", "question": "Can credentials be shared according to the policy?", "expected_doc_id": "usage-policy", "tags": ["policy", "security"]}
+{"id": "q028", "question": "What happens if content breaches the policy?", "expected_doc_id": "usage-policy", "tags": ["policy", "enforcement"]}
+{"id": "q029", "question": "Where should users go for account recovery steps?", "expected_doc_id": "support/faq", "tags": ["faq", "account"]}
+{"id": "q030", "question": "Explain the contact path for policy inquiries.", "expected_doc_id": "support/faq", "tags": ["faq", "contact"]}
+{"id": "q031", "question": "How long is user data retained?", "expected_doc_id": "security/data-privacy-policy", "tags": ["privacy", "retention"]}
+{"id": "q032", "question": "What encryption is used for data at rest?", "expected_doc_id": "security/data-privacy-policy", "tags": ["privacy", "encryption"]}
+{"id": "q033", "question": "Can I request deletion of my personal data?", "expected_doc_id": "security/data-privacy-policy", "tags": ["privacy", "rights"]}
+{"id": "q034", "question": "What happens in a data breach?", "expected_doc_id": "security/data-privacy-policy", "tags": ["privacy", "breach"]}
+{"id": "q035", "question": "Is the service GDPR compliant?", "expected_doc_id": "security/data-privacy-policy", "tags": ["privacy", "compliance"]}
+{"id": "q036", "question": "How do I reset my password?", "expected_doc_id": "support/account-management", "tags": ["account", "password"]}
+{"id": "q037", "question": "What are the password requirements?", "expected_doc_id": "support/account-management", "tags": ["account", "password"]}
+{"id": "q038", "question": "How do I enable two-factor authentication?", "expected_doc_id": "support/account-management", "tags": ["account", "2fa"]}
+{"id": "q039", "question": "How do I close my account?", "expected_doc_id": "support/account-management", "tags": ["account", "closure"]}
+{"id": "q040", "question": "What happens to my data when I close my account?", "expected_doc_id": "support/account-management", "tags": ["account", "closure", "privacy"]}
+{"id": "q041", "question": "Can I get a refund on my annual plan?", "expected_doc_id": "billing/refund-policy", "tags": ["billing", "refund"]}
+{"id": "q042", "question": "How do I request a refund?", "expected_doc_id": "billing/refund-policy", "tags": ["billing", "refund"]}
+{"id": "q043", "question": "How long does a refund take to process?", "expected_doc_id": "billing/refund-policy", "tags": ["billing", "refund", "timeline"]}
+{"id": "q044", "question": "What happens if I do a chargeback?", "expected_doc_id": "billing/refund-policy", "tags": ["billing", "chargeback"]}
+{"id": "q045", "question": "Are there exceptions to the refund policy?", "expected_doc_id": "billing/refund-policy", "tags": ["billing", "exceptions"]}
+{"id": "q046", "question": "My account is locked after too many login attempts. What do I do?", "expected_doc_id": "support/troubleshooting", "tags": ["troubleshooting", "login"]}
+{"id": "q047", "question": "Why am I getting an invalid credentials error?", "expected_doc_id": "support/troubleshooting", "tags": ["troubleshooting", "login"]}
+{"id": "q048", "question": "Pages are loading slowly. What should I try?", "expected_doc_id": "support/troubleshooting", "tags": ["troubleshooting", "performance"]}
+{"id": "q049", "question": "What file formats can I upload?", "expected_doc_id": "support/troubleshooting", "tags": ["troubleshooting", "upload"]}
+{"id": "q050", "question": "I'm not receiving email notifications. How do I fix this?", "expected_doc_id": "support/troubleshooting", "tags": ["troubleshooting", "notifications"]}
+{"id": "q051", "question": "What is the capital of France?", "eval_min_score": 0.99, "expect_insufficient_evidence": true, "tags": ["ood"]}
+{"id": "q052", "question": "Write a python quicksort implementation.", "eval_min_score": 0.99, "expect_insufficient_evidence": true, "tags": ["ood"]}
+{"id": "q053", "question": "What is the weather in Seattle tomorrow?", "eval_min_score": 0.99, "expect_insufficient_evidence": true, "tags": ["ood"]}
+{"id": "q054", "question": "Who won the super bowl in 1999?", "eval_min_score": 0.99, "expect_insufficient_evidence": true, "tags": ["ood"]}
+{"id": "q055", "question": "Explain quantum entanglement.", "eval_min_score": 0.99, "expect_insufficient_evidence": true, "tags": ["ood"]}

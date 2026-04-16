@@ -1,0 +1,29 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Env / secrets
+.env
+.env.local
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Project (add as needed)
+data/processed/
+results/
+*.sqlite3
+notebooks/.ipynb_checkpoints/
+
+# Private notes (never commit)
+**/PRIVATE_NOTES.md
+
+# Private notes
+learnings.md

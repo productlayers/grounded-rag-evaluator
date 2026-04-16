@@ -30,7 +30,7 @@ Built with an offline-first, provider-agnostic architecture and a built-in evalu
 
 ## ⚙️ Setup
 
-This project uses [`uv`](https://docs.astral.sh/uv/) for lightning-fast dependency and Python version management.
+This project uses [`uv`](https://docs.astral.sh/uv/) for fast dependency and Python version management.
 
 ```bash
 # Install uv (if not already installed)

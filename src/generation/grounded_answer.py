@@ -267,6 +267,68 @@ def _generate_llm(
 
 
 # ---------------------------------------------------------------------------
+# Agent-mode generator
+# ---------------------------------------------------------------------------
+
+
+def _generate_agent(
+    question: str,
+    index_path: Path,
+) -> GenerationResult:
+    """Delegate to the agentic loop and rehydrate citations.
+
+    The agentic loop returns ``AgentLoopResult`` which contains the raw answer
+    and a flat list of chunk IDs the LLM cited.  This function rehydrates those
+    IDs into full ``Citation`` objects using the pool of ``RetrievalResult``s
+    accumulated across all tool-call iterations.
+    """
+    from src.agent.loop import run_agent_loop  # local import avoids circular deps
+
+    loop_result = run_agent_loop(question=question, index_path=index_path)
+
+    # Build a lookup map from all chunks retrieved across all agent iterations
+    chunk_map: dict[str, "RetrievalResult"] = {r.chunk_id: r for r in loop_result.all_retrieved}
+
+    if loop_result.insufficient_evidence:
+        return GenerationResult(
+            question=question,
+            answer=loop_result.answer,
+            citations=[],
+            insufficient_evidence=True,
+            retrieval_scores=[r.score for r in loop_result.all_retrieved],
+            mode="agent",
+        )
+
+    # Rehydrate citations using the same pattern as LLM mode
+    cited_ids = set(loop_result.cited_chunk_ids)
+    # Also extract any [chunk_id] tags from the answer text (belt-and-suspenders)
+    cited_ids |= set(re.findall(r"\[([^\]]+::\w+_\d+)\]", loop_result.answer))
+
+    citations: list[Citation] = []
+    for chunk_id, r in chunk_map.items():
+        if chunk_id in cited_ids:
+            citations.append(
+                Citation(
+                    chunk_id=r.chunk_id,
+                    doc_id=r.doc_id,
+                    source_path=r.source_path,
+                    char_start=r.char_start,
+                    char_end=r.char_end,
+                    cited_text=r.text[:200],
+                )
+            )
+
+    return GenerationResult(
+        question=question,
+        answer=loop_result.answer.strip(),
+        citations=citations,
+        insufficient_evidence=False,
+        retrieval_scores=[r.score for r in loop_result.all_retrieved],
+        mode="agent",
+    )
+
+
+# ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
 
@@ -293,7 +355,7 @@ def generate_answer(
     question:
         The user's question.
     mode:
-        ``"retrieval"`` (default) or ``"llm"``.
+        ``"retrieval"`` (default), ``"llm"``, or ``"agent"``.
     top_k:
         Number of chunks to retrieve.
     min_score:
@@ -361,5 +423,7 @@ def generate_answer(
         return _generate_retrieval(question, results, max_sentences)
     elif mode == "llm":
         return _generate_llm(question, results)
+    elif mode == "agent":
+        return _generate_agent(question, index_path)
     else:
-        raise ValueError(f"Unknown generation mode: {mode!r}. Use 'retrieval' or 'llm'.")
+        raise ValueError(f"Unknown generation mode: {mode!r}. Use 'retrieval', 'llm', or 'agent'.")

@@ -14,12 +14,13 @@ def test_ui_backend_mode_sync():
 
     ui_content = ui_path.read_text()
 
-    # regex to find the radio button modes: ["mode1", "mode2"]
-    # Looking for: ["retrieval", "llm"]
-    match = re.search(r'\[\s*"([^"]+)"\s*,\s*"([^"]+)"\s*\]', ui_content)
-    assert match, "Could not find mode list in streamlit_app.py"
+    # Find the radio list: ["retrieval", "llm", "agent"] or any number of modes
+    #   Match a Python list literal containing only quoted strings.
+    list_match = re.search(r'\[\s*(?:"[^"]+"\s*,\s*)*"[^"]+"\s*\]', ui_content)
+    assert list_match, "Could not find mode list in streamlit_app.py"
 
-    ui_modes = [match.group(1), match.group(2)]
+    ui_modes = re.findall(r'"([^"]+)"', list_match.group(0))
+    assert ui_modes, "Mode list in streamlit_app.py is empty"
 
     # Try calling the backend with each mode (mocked)
     for mode in ui_modes:

@@ -301,7 +301,7 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     ans.add_argument(
         "--mode",
-        choices=["retrieval", "llm"],
+        choices=["retrieval", "llm", "agent"],
         default="retrieval",
         help="Generation mode (default: retrieval)",
     )
@@ -343,7 +343,7 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     ev.add_argument(
         "--mode",
-        choices=["retrieval", "llm"],
+        choices=["retrieval", "llm", "agent"],
         default="retrieval",
         help="Generation mode (default: retrieval)",
     )

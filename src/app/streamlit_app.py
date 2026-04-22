@@ -1,6 +1,7 @@
 import streamlit as st
 from dotenv import load_dotenv
 
+from src.agent.loop import AgentLoopResult  # noqa: F401 — used for type narrowing in trace
 from src.generation.grounded_answer import generate_answer
 
 load_dotenv()
@@ -15,8 +16,12 @@ with st.sidebar:
     st.header("Settings")
     mode = st.radio(
         "Mode",
-        ["retrieval", "llm"],
-        help="Retrieval returns raw chunks. LLM synthesizes an answer.",
+        ["retrieval", "llm", "agent"],
+        help=(
+            "Retrieval: raw chunks, zero hallucination risk. "
+            "LLM: synthesized answer. "
+            "Agent: multi-turn tool-calling loop."
+        ),
     )
 
     st.subheader("Retrieval Tuning")
@@ -35,6 +40,11 @@ with st.sidebar:
             "💡 **Mode Information:** LLM mode synthesizes a response using the "
             "credentials defined in your `.env` file (Groq or OpenAI)."
         )
+    elif mode == "agent":
+        st.warning(
+            "🤖 **Agent Mode:** The agent may call the search tool multiple times "
+            "and refine its query before answering. This uses more tokens than LLM mode."
+        )
 
 # Chat UI
 query = st.chat_input("What would you like to know?")
@@ -43,7 +53,12 @@ if query:
     st.chat_message("user").markdown(query)
 
     with st.chat_message("assistant"):
-        with st.spinner("Searching knowledge base..."):
+        spinner_text = (
+            "Agent is searching and reasoning..."
+            if mode == "agent"
+            else "Searching knowledge base..."
+        )
+        with st.spinner(spinner_text):
             try:
                 result = generate_answer(
                     question=query,
@@ -72,3 +87,12 @@ if query:
                     "**Retrieval Scores:** "
                     f"`{', '.join([f'{s:.4f}' for s in result.retrieval_scores])}`"
                 )
+
+        # Agent Trace — only shown in agent mode
+        if mode == "agent" and hasattr(result, "_agent_trace"):
+            trace = result._agent_trace  # type: ignore
+            if trace:
+                with st.expander(f"🤖 Agent Reasoning Trace ({len(trace)} step(s))"):
+                    for i, step in enumerate(trace, 1):
+                        st.markdown(f"**Step {i} — `{step.tool}`**")
+                        st.caption(step.result_summary)

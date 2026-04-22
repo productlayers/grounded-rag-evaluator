@@ -1,6 +1,6 @@
 # Usage Policy
 
-This document describes acceptable use of the example service for portfolio evaluation.
+This document describes acceptable use of the example service for internal evaluation.
 
 ## Account responsibilities
 

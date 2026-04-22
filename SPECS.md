@@ -1,6 +1,5 @@
 # Project Brief — Grounded RAG Evaluator
-*Retrospectively written after project completion as a reference example.
-This is what should have been authored BEFORE the first line of code.*
+
 
 ---
 
@@ -68,7 +67,7 @@ trustworthy answers without hallucination risk.
 | 4 | Insufficient-evidence gate | Safety non-negotiable | OOD questions decline at > 95% rate |
 | 5 | LLM generation mode | User experience | Synthesized answers with `[chunk_id]` citations |
 | 6 | Evaluation harness | Prove the metrics | Reproducible before/after reports from `run_eval.py` |
-| 7 | Streamlit UI | Portfolio demo | Clean interface exposing retrieval, LLM, and results |
+| 7 | Streamlit UI | Interactive demonstration | Clean interface exposing retrieval, LLM, and results |
 
 **Phase 2:**
 - Agentic loop with tool calling 

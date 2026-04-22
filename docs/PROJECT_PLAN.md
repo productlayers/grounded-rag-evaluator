@@ -1,6 +1,6 @@
-# Project plan (portfolio-safe)
+# Project Plan
 
-Technical milestones for this repo. Personal career notes stay outside git or in a gitignored file.
+Technical milestones for this repo.
 
 ## Milestones
 

@@ -8,7 +8,7 @@ Built with an offline-first, provider-agnostic architecture and a built-in evalu
 
 ---
 
-## 🎯 PM/Product Highlights
+## 🎯 Product Highlights
 
 1. **Deterministic Hallucination Gate:** Uses mathematical similarity thresholds (`min_score`) rather than LLM "vibes" to protect against off-domain queries preventing brand risk.
 2. **Evaluation-Driven Iteration:** Includes a complete evaluation script (`run_eval.py`) that calculates quantitative metrics against a golden dataset (Hit Rate, OOD Decline Rate, Citation Rate).

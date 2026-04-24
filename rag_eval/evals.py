@@ -1,3 +1,4 @@
+import asyncio
 import json
 import os
 import sys
@@ -9,7 +10,7 @@ load_dotenv(Path(__file__).parent.parent / ".env")
 
 from openai import OpenAI
 
-from ragas import Dataset, experiment
+from ragas import Dataset, experiment, SingleTurnSample
 from ragas.llms import llm_factory
 from ragas.metrics import Faithfulness
 
@@ -74,11 +75,15 @@ async def run_experiment(row):
         # Fallback to a placeholder if retrieval happened but citations didn't
         contexts = ["Context was retrieved but no specific citations were made."]
 
-    score = faithfulness.score(
-        question=row["question"],
-        answer=result.answer,
-        contexts=contexts,
+    # 1. Standardize the data into a SingleTurnSample
+    sample = SingleTurnSample(
+        user_input=row["question"],
+        response=result.answer,
+        retrieved_contexts=contexts
     )
+
+    # 2. Use the new async scoring method for a single sample
+    score = await faithfulness.single_ascore(sample)
 
     experiment_view = {
         **row,

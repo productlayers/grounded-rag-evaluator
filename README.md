@@ -17,6 +17,30 @@ Built with an offline-first, provider-agnostic architecture and a built-in evalu
 
 ---
 
+## 🧱 Built With
+
+- **Model Inference:** [Groq](https://groq.com/) (Llama-3 latency)
+- **Embeddings:** `sentence-transformers` (Local offline mode)
+- **Evaluation:** Custom Deterministic Harness (`run_eval.py`) + [Ragas](https://github.com/vibrantlabsai/ragas) (Probabilistic LLM-as-a-Judge)
+- **Dependency Management:** [uv](https://docs.astral.sh/uv/) (Next-gen Python packaging)
+
+---
+
+## 📜 Citations
+
+If you use this evaluation framework in your research or product, please cite Ragas:
+
+```bibtex
+@misc{ragas2024,
+  author       = {VibrantLabs},
+  title        = {Ragas: Supercharge Your LLM Application Evaluations},
+  year         = {2024},
+  howpublished = {\url{https://github.com/vibrantlabsai/ragas}},
+}
+```
+
+---
+
 ## 🛠 Status
 
 - [x] Repo skeleton + project environment (`uv`)

@@ -83,7 +83,7 @@ async def run_experiment(row):
     )
 
     # 2. Use the new async scoring method for a single sample
-    score = await faithfulness.single_ascore(sample)
+    score = await faithfulness.single_turn_ascore(sample)
 
     experiment_view = {
         **row,

@@ -10,6 +10,7 @@ This document tracks the planned features, architectural improvements, and optim
 | 2 | Architecture / Safety | Force First Tool Call Deterministically (Hybrid Agent Pattern) | Planned |
 | 3 | CI/CD & Evaluation | Rate Limit Management for Automated Eval Suite | Planned |
 | 4 | Optimization / Cost | Local Cross-Encoder Re-ranking (Token Optimization) | Planned |
+| 5 | Resilience / Cost | Groq Compound Model Fallback Strategy | Planned |
 
 ---
 
@@ -34,3 +35,9 @@ This document tracks the planned features, architectural improvements, and optim
 * **Feature Type:** Optimization / Cost
 * **Gap:** The current bi-encoder retrieval strategy relies on sending a large volume of chunks (`top_k=3`) to the LLM to guarantee high recall, resulting in severe "Context Window Bloat" and massive token costs during evaluation.
 * **Planned Fix:** Integrate a local, CPU-based Cross-Encoder (via `sentence-transformers`) to act as a secondary precision filter. This will allow the pipeline to retrieve ~20 chunks via fast vector math, re-rank them locally for deep relevance, and pass only the top 1 chunk to the LLM.
+
+### 5. Groq Compound Model Fallback Strategy
+* **Feature Type:** Resilience / Cost
+* **Gap:** The evaluation pipeline entirely halts if the primary heavy model (e.g., `llama-3.3-70b-versatile`) exhausts its daily token quota, creating a rigid single point of failure.
+* **Planned Fix:** Implement a programmatic "Compound Model" fallback chain in the orchestrator/eval script. If the primary 70B model throws a `429 Too Many Requests` error, automatically catch the exception and immediately retry the request using a smaller, higher-limit model (e.g., `llama3-8b-8192` or `gemma2-9b-it`).
+* **PM Value:** Drastically increases the robustness of the system. Allows the team to stretch the free-tier API limits significantly further by utilizing smaller models when the primary is exhausted, ensuring the CI/CD pipeline doesn't block developers.

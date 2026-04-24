@@ -11,18 +11,19 @@ from openai import OpenAI
 
 from ragas import Dataset, experiment
 from ragas.llms import llm_factory
-from ragas.metrics import DiscreteMetric
+from ragas.metrics import Faithfulness
 
-# Add the current directory to the path so we can import rag module when run as a script
-sys.path.insert(0, str(Path(__file__).parent))
-from rag import default_rag_client
+# Add the project root to the path so we can import src module
+PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from src.generation.grounded_answer import generate_answer
 
 openai_client = OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY"),
     base_url=os.environ.get("OPENAI_BASE_URL")
 )
 model_name = os.environ.get("OPENAI_MODEL", "llama-3.3-70b-versatile")
-rag_client = default_rag_client(llm_client=openai_client, logdir="evals/logs")
 llm = llm_factory(model_name, client=openai_client)
 
 
@@ -52,28 +53,39 @@ def load_dataset():
     return dataset
 
 
-my_metric = DiscreteMetric(
-    name="correctness",
-    prompt="Check if the response contains points mentioned from the grading notes and return 'pass' or 'fail'.\nResponse: {response} Grading Notes: {grading_notes}",
-    allowed_values=["pass", "fail"],
-)
+# Initialize the Faithfulness metric
+faithfulness = Faithfulness(llm=llm)
 
 
 @experiment()
 async def run_experiment(row):
-    response = rag_client.query(row["question"])
+    # Call our real orchestrator
+    result = generate_answer(
+        question=row["question"],
+        mode="llm",  # We want to test the LLM grounded mode
+        index_path=PROJECT_ROOT / "data/processed/retrieval_index.json"
+    )
 
-    score = my_metric.score(
-        llm=llm,
-        response=response.get("answer", " "),
-        grading_notes=row["grading_notes"],
+    # Extract context strings from citations for the Faithfulness check
+    contexts = [c.cited_text for c in result.citations]
+    
+    # If no citations were made, we still need to provide context if available
+    if not contexts and result.insufficient_evidence is False:
+        # Fallback to a placeholder if retrieval happened but citations didn't
+        contexts = ["Context was retrieved but no specific citations were made."]
+
+    score = faithfulness.score(
+        question=row["question"],
+        answer=result.answer,
+        contexts=contexts,
     )
 
     experiment_view = {
         **row,
-        "response": response.get("answer", ""),
-        "score": score.value,
-        "log_file": response.get("logs", " "),
+        "response": result.answer,
+        "faithfulness_score": score.value,
+        "insufficient_evidence": result.insufficient_evidence,
+        "num_citations": len(result.citations)
     }
     return experiment_view
 
